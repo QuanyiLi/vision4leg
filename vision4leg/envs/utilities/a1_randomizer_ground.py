@@ -371,42 +371,43 @@ class TerrainRandomizer(env_randomizer_base.EnvRandomizerBase):
     Args:
       env: A minitaur gym environment.
     """
-    if self._terrain_type is TerrainType.TRIANGLE_MESH:
-      self._load_triangle_mesh(env)
-    if self._terrain_type is TerrainType.RANDOM_BLOCKS:
-      self._generate_convex_blocks(env)
-    if self._terrain_type is TerrainType.RANDOM_BLOCKS_SPARSE:
-      self._generate_convex_blocks_sparse(env)
-    if self._terrain_type is TerrainType.RANDOM_HEIGHTFIELD:
-      self._generate_field(env)
-    if self._terrain_type is TerrainType.STAIRS:
-      self._generate_stairs(env)
-    if self._terrain_type is TerrainType.MULTI_STAIRS:
-      self._generate_multi_stairs(env)
-    if self._terrain_type in [
-        TerrainType.RANDOM_HILL,
-        TerrainType.RANDOM_MOUNT,
-        TerrainType.MAZE,
-        TerrainType.GOAL_MOUNT,
-    ] and not self.terrain_created:
-      self._generate_terrain(env)
-    if self._terrain_type is TerrainType.RANDOM_BLOCKS_SPARSE_AND_HEIGHTFIELD:
-      self._generate_convex_blocks_sparse(env)
-      self._generate_field(env, num_rows=512, num_columns=64)
-    if self._terrain_type is TerrainType.RANDOM_BLOCKS_SPARSE_WITH_SUBGOAL:
-      self._generate_convex_blocks_sparse_hard_with_subgoal(env)
-    if self._terrain_type is TerrainType.RANDOM_BLOCKS_SPARSE_WITH_SUBGOAL_HEIGHTFIELD:
-      self._generate_convex_blocks_sparse_hard_with_subgoal(env)
-      self._generate_field(env, num_rows=512, num_columns=64)
-    if self._terrain_type is TerrainType.RANDOM_SPHERE_WITH_SUBGOAL:
-      self._generate_spheres_and_subgoal(env)
-    if self._terrain_type is TerrainType.RANDOM_BLOCKS_SPARSE_THIN_WIDE:
-      self._generate_convex_blocks_thin_wide(
-        env)
-    if self._terrain_type is TerrainType.RANDOM_CHAIR_DESK:
-      self._generate_chair_desk(env, with_subgoal=self.subgoal)
-    if self._terrain_type is TerrainType.MAZE:
-      self._sample_goal_in_maze(env)
+    # if self._terrain_type is TerrainType.TRIANGLE_MESH:
+    #   self._load_triangle_mesh(env)
+    # if self._terrain_type is TerrainType.RANDOM_BLOCKS:
+    #   self._generate_convex_blocks(env)
+    # if self._terrain_type is TerrainType.RANDOM_BLOCKS_SPARSE:
+    #   self._generate_convex_blocks_sparse(env)
+    # if self._terrain_type is TerrainType.RANDOM_HEIGHTFIELD:
+    #   self._generate_field(env)
+    # if self._terrain_type is TerrainType.STAIRS:
+    #   self._generate_stairs(env)
+    # if self._terrain_type is TerrainType.MULTI_STAIRS:
+    #   self._generate_multi_stairs(env)
+    # if self._terrain_type in [
+    #     TerrainType.RANDOM_HILL,
+    #     TerrainType.RANDOM_MOUNT,
+    #     TerrainType.MAZE,
+    #     TerrainType.GOAL_MOUNT,
+    # ] and not self.terrain_created:
+    #   self._generate_terrain(env)
+    # if self._terrain_type is TerrainType.RANDOM_BLOCKS_SPARSE_AND_HEIGHTFIELD:
+    self._generate_stairs(env)
+    self._generate_convex_blocks_sparse(env)
+    self._generate_field(env, num_rows=512, num_columns=64)
+    # if self._terrain_type is TerrainType.RANDOM_BLOCKS_SPARSE_WITH_SUBGOAL:
+    #   self._generate_convex_blocks_sparse_hard_with_subgoal(env)
+    # if self._terrain_type is TerrainType.RANDOM_BLOCKS_SPARSE_WITH_SUBGOAL_HEIGHTFIELD:
+    #   self._generate_convex_blocks_sparse_hard_with_subgoal(env)
+    #   self._generate_field(env, num_rows=512, num_columns=64)
+    # if self._terrain_type is TerrainType.RANDOM_SPHERE_WITH_SUBGOAL:
+    #   self._generate_spheres_and_subgoal(env)
+    # if self._terrain_type is TerrainType.RANDOM_BLOCKS_SPARSE_THIN_WIDE:
+    #   self._generate_convex_blocks_thin_wide(
+    #     env)
+    # if self._terrain_type is TerrainType.RANDOM_CHAIR_DESK:
+    #   self._generate_chair_desk(env, with_subgoal=self.subgoal)
+    # if self._terrain_type is TerrainType.MAZE:
+    #   self._sample_goal_in_maze(env)
 
   def randomize_step(self, env):
     if not self.moving:
@@ -698,7 +699,7 @@ class TerrainRandomizer(env_randomizer_base.EnvRandomizerBase):
         basePosition=GOAL_POS["stairs"]
       )
       env._world_dict["goal_pos"] = GOAL_POS["stairs"]
-    self._created = True
+    # self._created = True
 
   def _generate_multi_stairs(self, env):
     num_stairs = np.random.randint(low=1, high=6)
