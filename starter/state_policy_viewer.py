@@ -69,7 +69,7 @@ args = get_args()
 if args.config is not None:
   PARAM_PATH = args.config
 else:
-  PARAM_PATH = "{}/{}/{}/{}/params.json".format(
+  PARAM_PATH = "{}\\{}\\{}\\{}\\params.json".format(
     args.log_dir,
     args.id,
     args.env_name,
@@ -100,7 +100,7 @@ pf = policies.GaussianContPolicyBasicBias(
   **params['net'],
   **params['policy'])
 
-PATH = "{}/{}/{}/{}/model/model_pf_500.pth".format(
+PATH = "{}\\{}\\{}\\{}\\model\\model_pf_best.pth".format(
   args.log_dir,
   args.id,
   # params['env_name'],
@@ -175,13 +175,13 @@ for _ in range(1):
   # log_id = p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, "racecar.mp4")
   # env = wrappers.Monitor(env_single, "view_log", video_callable=None, force=True)
 
-  from vidgear.gears import WriteGear
-  output_params = {"-crf": 0, "-preset": "fast"}
-  writer = WriteGear(
-    output_filename=os.path.join(
-      video_output_path, 'Output{}.mp4'.format(args.add_tag)),
-    logging=True, **output_params
-  )
+  # from vidgear.gears import WriteGear
+  # output_params = {"-crf": 0, "-preset": "fast"}
+  # writer = WriteGear(
+  #   output_filename=os.path.join(
+  #     video_output_path, 'Output{}.mp4'.format(args.add_tag)),
+  #   logging=True, **output_params
+  # )
   # out = cv2.VideoWriter('project.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 20.00, (360, 480))
   # obs = env_single.reset()
   reward = 0

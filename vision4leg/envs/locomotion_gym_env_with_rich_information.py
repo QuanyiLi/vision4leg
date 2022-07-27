@@ -1,4 +1,5 @@
 # coding=utf-8
+
 # Copyright 2020 The Google Research Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +20,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from vision4leg.envs.sensors import space_utils
 from vision4leg.envs.sensors import sensor
 from vision4leg.robots import robot_config
+import pybullet as pyb
 import cv2
 import vision4leg.envs.pybullet_client as bullet_client
 import pybullet  # pytype: disable=import-error
@@ -74,6 +76,7 @@ class LocomotionGymEnv(gym.Env):
                blinding_spot=True,
                interpolation=False,
                fixed_delay_observation=False,
+               random_spawn_heading=False
                ):
     """Initializes the locomotion gym environment.
 
@@ -93,6 +96,7 @@ class LocomotionGymEnv(gym.Env):
       ValueError: If the num_action_repeat is less than 1.
 
     """
+    self.random_spawn_heading= random_spawn_heading
     self.count_t = 0
     self.seed()
     self._gym_config = gym_config
@@ -178,7 +182,7 @@ class LocomotionGymEnv(gym.Env):
       if self._record_video:
         self._pybullet_client = pybullet
         self._pybullet_client .connect(
-          self._pybullet_client.GUI, options="--width=1280 --height=720 --mp4=\"test.mp4\" --mp4fps=100")
+          self._pybullet_client.GUI, options="--width=1800 --height=1000--mp4=\"test.mp4\" --mp4fps=100")
         self._pybullet_client.configureDebugVisualizer(
           self._pybullet_client.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
       else:
@@ -375,7 +379,9 @@ class LocomotionGymEnv(gym.Env):
     self._robot.Reset(reload_urdf=False,
                       default_motor_angles=initial_motor_angles,
                       reset_time=reset_duration)
-    if self.init_ori is not None:
+    angle=np.random.rand()*2*np.pi
+    self.init_ori = pyb.getQuaternionFromEuler([0., 0., angle])
+    if self.init_ori is not None and self.random_spawn_heading:
       self._pybullet_client.resetBasePositionAndOrientation(
         self._robot.quadruped, self.init_pos, self.init_ori)
     self._pybullet_client.setPhysicsEngineParameter(enableConeFriction=0)

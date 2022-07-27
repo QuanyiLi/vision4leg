@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import pybullet
 import gym
 import numpy as np
 import vision4leg.envs.utilities.a1_randomizer_ground as a1_rg
@@ -200,6 +201,7 @@ def build_a1_ground_env(
     curriculum=False,
     interpolation=False,
     fixed_delay_observation=False,
+    random_spawn_heading=False
 ):
 
   sim_params = locomotion_gym_config.SimulationParameters()
@@ -331,7 +333,8 @@ def build_a1_ground_env(
     reset_frame_idx=reset_frame_idx,
     reset_frame_idx_each_step=reset_frame_idx_each_step,
     interpolation=interpolation,
-    fixed_delay_observation=fixed_delay_observation
+    fixed_delay_observation=fixed_delay_observation,
+    random_spawn_heading=random_spawn_heading
   )
 
   env = observation_dictionary_to_array_wrapper.ObservationDictionaryToArrayWrapper(
@@ -525,9 +528,15 @@ if __name__ == "__main__":
     time_step_s=0.001,
     add_last_action_input=False,
     enable_action_interpolation=False,
+    terrain_type="mount",
     get_image=True,
     enable_rendering=True,
   )
+  pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_WIREFRAME, 0)
+  pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_RGB_BUFFER_PREVIEW, 0)
+  pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_DEPTH_BUFFER_PREVIEW, 0)
+  pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_SEGMENTATION_MARK_PREVIEW, 0)
+  pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_GUI, 0)
   import time
   c_t = time.time()
   env.reset()

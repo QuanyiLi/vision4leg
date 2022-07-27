@@ -267,9 +267,16 @@ class Minitaur(object):
      dist] = self._pybullet_client.getDebugVisualizerCamera()[8:11]
     self._pybullet_client.resetDebugVisualizerCamera(dist, yaw, pitch,
                                                      base_pos)
+
+    # self._pybullet_client.resetDebugVisualizerCamera(3.5, 0, -89.9,
+    #                                                  [6,2,0])
     self._pybullet_client.configureDebugVisualizer(
       self._pybullet_client.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
 
+    pos = self.GetBasePosition()
+    text_pos = [pos[0]-0.5, pos[1], pos[2]+0.5]
+    # from drivingforce.policy_dissection.network_vis import legged_robot_command
+    # self._pybullet_client.addUserDebugText(legged_robot_command, text_pos, textSize=4, textColorRGB=[1, 0, 0], replaceItemUniqueId=True)
     self.ReceiveObservation()
     self._state_action_counter += 1
 

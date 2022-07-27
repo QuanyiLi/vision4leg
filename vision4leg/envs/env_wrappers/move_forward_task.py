@@ -37,7 +37,7 @@ class MoveForwardTask(object):
       move_forward_coeff=1,
       other_direction_penalty=0,
       z_penalty=0,
-      orientation_penalty=0,
+      orientation_penalty=1,
       time_step_s=0.01,
       num_action_repeat=10,
       height_fall_coeff=0.3,
